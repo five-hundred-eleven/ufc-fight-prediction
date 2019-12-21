@@ -61,13 +61,3 @@ def displayPage(path_name):
         return predict.layout
     elif path_name == "/insights":
         return predict.layout
-
-@app.server.route("/css/<path>")
-def static_file(path):
-    static_folder = os.path.join(os.getcwd(), "css")
-    return send_from_directory(static_folder, path)
-
-@app.server.route("/img/<path>")
-def static_file(path):
-    static_folder = os.path.join(os.getcwd(), "img")
-    return send_from_directory(static_folder, path)
