@@ -17,9 +17,9 @@ select_red_column = dbc.Col(
         dcc.Markdown("""
             ### Red Corner
         """), 
-        dbc.Select(
+        dcc.Dropdown(
             id="red-corner",
-            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson"]]
+            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson", "Justin Gaethje",]]
         )
     ],
     md=4,
@@ -32,9 +32,9 @@ select_blue_column = dbc.Col(
         dcc.Markdown("""
             ### Blue Corner
         """), 
-        dbc.Select(
+        dcc.Dropdown(
             id="blue-corner",
-            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson"]]
+            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson", "Justin Gaethje",]]
         )
     ],
     md=4,
@@ -59,6 +59,7 @@ layout = html.Div([
     ]
 )
 def makePrediction(r_fighter, b_fighter):
+
     winner = np.random.choice([r_fighter, b_fighter])
 
     return [
