@@ -29,3 +29,8 @@
     background-color: #fff;
     background-size: cover;
 }
+
+
+#page-content {
+    min-height: calc(100vh - 176px);
+}
