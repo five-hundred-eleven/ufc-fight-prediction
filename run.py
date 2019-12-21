@@ -23,32 +23,44 @@ navbar = dbc.NavbarSimple(
 )
 
 
-footer = dbc.Container(
-    dbc.Row(
-        dbc.Col(
-            html.P(
-                [
-                    html.Span("Erik Cowley", className="mr-2"),
-                ],
-                className="lead"
+footer = (
+    html.Div([
+        html.Hr(),
+        dbc.Container(
+            dbc.Row(
+                dbc.Col(
+                    html.P(
+                        [
+                            html.A(html.Span("Erik Cowley", className="mr-2"), href="https://datascience.stromsy.com"),
+                            html.A(html.I(className='fas fa-envelope-square mr-1'), href='mailto:ecowley@protonmail.com'),
+                            html.A(html.I(className='fab fa-github-square mr-1'), href='https://github.com/ekoly/ufc-fight-prediction'),
+                            html.A(html.I(className='fab fa-linkedin mr-1'), href='https://www.linkedin.com/in/erik-cowley-89090120/'),
+                            html.A(html.I(className='fab fa-twitter-square mr-1'), href='https://twitter.com/<you>'),
+                        ],
+                        className="lead"
+                    )
+                )
             )
-        )
-    )
+        ),
+        html.Hr(),
+    ], id="footer")
 )
 
 
-app.layout = html.Div([
-    dcc.Location(id="url", refresh=False),
-    navbar,
+app.layout = (
     html.Div([
         html.Div([
-            html.Hr(),
-            dbc.Container(id="page-content", className="mt-4"),
-            html.Hr(),
-        ], id="background-shader"),
-    ], id="background-img-ufc"),
-    footer,
-])
+            html.Div([
+                dcc.Location(id="url", refresh=False),
+                navbar,
+                html.Hr(),
+                dbc.Container(id="page-content", className="mt-4"),
+                html.Hr(),
+                footer,
+            ], id="background-shader"),
+        ], id="background-img-ufc"),
+    ])
+)
 
 
 
