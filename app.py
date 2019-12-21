@@ -20,6 +20,7 @@ meta_tags = [
 
 flask_app = flask.Flask(__name__)
 app = dash.Dash(__name__, server=flask_app, external_stylesheets=external_stylesheets, meta_tags=meta_tags)
+app.config.suppress_callback_exceptions = True
 app.title = "UFC Predictor"
 server = app.server
 

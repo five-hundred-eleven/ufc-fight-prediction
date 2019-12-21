@@ -11,33 +11,59 @@ from app import app
 
 import numpy as np
 
-column1 = dbc.Col(
+
+select_red_column = dbc.Col(
     [
-        dcc.Markdown(
-            """
-                ### Blah
-
-                blah blah blah
-
-                blah blah
-
-                blah blah blah
-            """
-        ),
-        dcc.Link(dbc.Button("Predict"), href="/predictions"),
+        dcc.Markdown("""
+            ### Red Corner
+        """), 
+        dbc.Select(
+            id="red-corner",
+            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson"]]
+        )
     ],
     md=4,
+    className="red-corner"
 )
 
 
-fig = go.Figure(
-    data=go.Scatter(x=np.random.randint(0, 100, 100), y=np.random.randint(0, 100, 100))
-)
-
-column2 = dbc.Col(
+select_blue_column = dbc.Col(
     [
-        dcc.Graph(figure=fig),
+        dcc.Markdown("""
+            ### Blue Corner
+        """), 
+        dbc.Select(
+            id="blue-corner",
+            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson"]]
+        )
     ],
+    md=4,
+    className="blue-corner"
 )
 
-layout = dbc.Row([column1, column2])
+
+layout = html.Div([
+    dbc.Row([select_red_column, select_blue_column]),
+    dbc.Row([
+        dbc.Col([], id="results")
+    ])
+])
+
+
+
+@app.callback(
+    dash.dependencies.Output("results", "children"),
+    [
+        dash.dependencies.Input("red-corner", "value"),
+        dash.dependencies.Input("blue-corner", "value"),
+    ]
+)
+def makePrediction(r_fighter, b_fighter):
+    winner = np.random.choice([r_fighter, b_fighter])
+
+    return [
+        dcc.Markdown(f"""
+            ### Winner: {winner}
+        """)
+    ]
+

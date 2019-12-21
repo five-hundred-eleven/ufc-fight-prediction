@@ -6,7 +6,6 @@ from dash.dependencies import Input, Output
 
 
 from app import app, server
-from pages import index, predict, insights
 
 
 navbar = dbc.NavbarSimple(
@@ -59,9 +58,13 @@ app.layout = (
 )
 
 
+# this line needs to be after setting app.layout
+from pages import index, predict, insights
 
-@app.callback(Output("page-content", "children"),
-            [Input("url", "pathname"),],)
+@app.callback(
+    Output("page-content", "children"),
+    [Input("url", "pathname"),],
+)
 def displayPage(path_name):
     if path_name == "/":
         return index.layout
