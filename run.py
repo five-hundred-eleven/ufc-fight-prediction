@@ -34,7 +34,6 @@ footer = (
                             html.A(html.I(className='fas fa-envelope-square mr-1'), href='mailto:ecowley@protonmail.com'),
                             html.A(html.I(className='fab fa-github-square mr-1'), href='https://github.com/ekoly/ufc-fight-prediction'),
                             html.A(html.I(className='fab fa-linkedin mr-1'), href='https://www.linkedin.com/in/erik-cowley-89090120/'),
-                            html.A(html.I(className='fab fa-twitter-square mr-1'), href='https://twitter.com/<you>'),
                         ],
                         className="lead"
                     )
