@@ -38,14 +38,17 @@ footer = dbc.Container(
 
 
 app.layout = html.Div([
+    dcc.Location(id="url", refresh=False),
+    navbar,
+    html.Div([
         html.Div([
-            dcc.Location(id="url", refresh=False),
-            navbar,
+            html.Hr(),
             dbc.Container(id="page-content", className="mt-4"),
             html.Hr(),
-            footer,
-        ]),
-], id="background-shader")
+        ], id="background-shader"),
+    ], id="background-img-ufc"),
+    footer,
+])
 
 
 
