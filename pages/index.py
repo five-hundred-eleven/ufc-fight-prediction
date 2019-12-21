@@ -11,6 +11,7 @@ from app import app
 
 import numpy as np
 
+
 column1 = dbc.Col(
     [
         dcc.Markdown(

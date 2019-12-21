@@ -38,11 +38,15 @@ footer = dbc.Container(
 
 
 app.layout = html.Div([
-    dcc.Location(id="url", refresh=False),
-    navbar,
-    dbc.Container(id="page-content", className="mt-4"),
-    html.Hr(),
-    footer,
+    html.Div([
+        html.Div([
+            dcc.Location(id="url", refresh=False),
+            navbar,
+            dbc.Container(id="page-content", className="mt-4"),
+            html.Hr(),
+            footer,
+        ]),
+    ]),
 ])
 
 
