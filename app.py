@@ -17,3 +17,14 @@ meta_tags = [
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=meta_tags)
 app.title = "UFC Predictor"
 server = app.server
+
+
+@app.server.route("/css/<path>")
+def static_file(path):
+    static_folder = os.path.join(os.getcwd(), "css")
+    return send_from_directory(static_folder, path)
+
+@app.server.route("/img/<path>")
+def static_file(path):
+    static_folder = os.path.join(os.getcwd(), "img")
+    return send_from_directory(static_folder, path)
