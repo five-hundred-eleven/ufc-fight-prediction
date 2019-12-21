@@ -36,3 +36,24 @@
 #page-content {
     min-height: calc(100vh - 176px);
 }
+
+
+.red-corner, .blue-corner, .bruce-buffer {
+    text-align: center;
+    height: 300px;
+}
+
+.red-corner {
+    color: #511;
+}
+
+.blue-corner {
+    color: #115;
+}
+
+.bruce-buffer {
+    background-image: url("/img/bruce-buffer.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}

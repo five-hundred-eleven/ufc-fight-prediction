@@ -15,7 +15,8 @@ import numpy as np
 select_red_column = dbc.Col(
     [
         dcc.Markdown("""
-            ### Red Corner
+            fighting out of the
+            ### RED CORNER
         """), 
         dcc.Dropdown(
             id="red-corner",
@@ -30,7 +31,8 @@ select_red_column = dbc.Col(
 select_blue_column = dbc.Col(
     [
         dcc.Markdown("""
-            ### Blue Corner
+            fighting out of the
+            ### BLUE CORNER
         """), 
         dcc.Dropdown(
             id="blue-corner",
@@ -41,9 +43,15 @@ select_blue_column = dbc.Col(
     className="blue-corner"
 )
 
+buffer_column = dbc.Col(
+    [],
+    md=4,
+    className="bruce-buffer",
+)
+
 
 layout = html.Div([
-    dbc.Row([select_red_column, select_blue_column]),
+    dbc.Row([select_red_column, buffer_column, select_blue_column]),
     dbc.Row([
         dbc.Col([], id="results")
     ])
