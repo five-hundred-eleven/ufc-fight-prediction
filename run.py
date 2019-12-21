@@ -23,10 +23,10 @@ navbar = dbc.NavbarSimple(
 )
 
 
-footer = doc.Container(
+footer = dbc.Container(
     dbc.Row(
         dbc.Col(
-            dbc.P(
+            html.P(
                 [
                     html.Span("Erik Cowley", className="mr-2"),
                 ],
@@ -38,7 +38,7 @@ footer = doc.Container(
 
 
 app.layout = html.Div([
-    dcc.location(id="url", refresh=False),
+    dcc.Location(id="url", refresh=False),
     navbar,
     dbc.Container(id="page-content", className="mt-4"),
     html.Hr(),

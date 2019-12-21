@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 
 from app import app
 
-import np
+import numpy as np
 
 column1 = dbc.Col(
     [
@@ -31,7 +31,7 @@ column1 = dbc.Col(
 
 
 fig = go.Figure(
-    data=go.Scatter(x=np.random.randints(0, 100, 100), y=np.random.randint(0, 100, 100))
+    data=go.Scatter(x=np.random.randint(0, 100, 100), y=np.random.randint(0, 100, 100))
 )
 
 column2 = dbc.Col(
