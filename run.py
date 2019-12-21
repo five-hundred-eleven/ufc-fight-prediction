@@ -25,7 +25,6 @@ navbar = dbc.NavbarSimple(
 
 footer = (
     html.Div([
-        html.Hr(),
         dbc.Container(
             dbc.Row(
                 dbc.Col(
@@ -40,9 +39,8 @@ footer = (
                         className="lead"
                     )
                 )
-            )
+            ),
         ),
-        html.Hr(),
     ], id="footer")
 )
 
