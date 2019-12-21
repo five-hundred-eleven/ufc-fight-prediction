@@ -20,11 +20,11 @@ server = app.server
 
 
 @app.server.route("/css/<path>")
-def static_file(path):
+def static_css(path):
     static_folder = os.path.join(os.getcwd(), "css")
     return send_from_directory(static_folder, path)
 
 @app.server.route("/img/<path>")
-def static_file(path):
+def static_img(path):
     static_folder = os.path.join(os.getcwd(), "img")
     return send_from_directory(static_folder, path)
