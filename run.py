@@ -46,7 +46,7 @@ footer = (
 
 app.layout = (
     html.Div([
-        html.Div([html.Div([], id="background-shader"), id="background-img-ufc"),
+        html.Div([html.Div([], id="background-shader")], id="background-img-ufc"),
         html.Div([
             dcc.Location(id="url", refresh=False),
             navbar,
