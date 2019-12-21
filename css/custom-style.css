@@ -1,0 +1,18 @@
+/**
+ * Custom stylesheet for ufcpredict.stromsy.com.
+ */
+
+/* The following image was retrieved from:
+ * https://i.ytimg.com/vi/Hpk36AjA8G8/maxresdefault.jpg
+ * on Dec 21, 2019
+ */
+body {
+    background-image: url("/img/ufc-td-garden.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#background-shader {
+    background-color: rgb(255, 255, 255, 0.5);
+}
