@@ -31,7 +31,7 @@ class FighterService:
         return fighter.iloc[0]["nick"]
 
 
-    def getAllFighters():
+    def getAllFighters(self):
         """
             @rtype: List[str]
         """

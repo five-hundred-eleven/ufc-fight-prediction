@@ -11,6 +11,8 @@ from app import app
 
 import numpy as np
 
+from service.fighter_service import fighter_service
+
 
 select_red_column = dbc.Col(
     [
@@ -20,8 +22,10 @@ select_red_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="red-corner",
-            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson", "Justin Gaethje",]]
-        )
+            options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
+        ),
+        dcc.Markdown("""
+        """, id="red-corner-nick"),
     ],
     md=4,
     className="red-corner"
@@ -36,8 +40,10 @@ select_blue_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="blue-corner",
-            options=[{"label": s, "value": s} for s in ["Khabib Nurmagomedov", "Conor McGregor", "Dusitin Pourier", "Tony Ferguson", "Justin Gaethje",]]
-        )
+            options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
+        ),
+        dcc.Markdown("""
+        """, id="blue-corner-nick"),
     ],
     md=4,
     className="blue-corner"
@@ -57,6 +63,28 @@ layout = html.Div([
     ])
 ])
 
+
+
+@app.callback(
+    dash.dependencies.Output("red-corner-nick", "children"),
+    [dash.dependencies.Input("red-corner", "value")],
+)
+def setRedNick(fighter):
+    nick = fighter_service.getNickname(fighter)
+    return """
+        "{nick}"
+    """
+
+
+@app.callback(
+    dash.dependencies.Output("blue-corner-nick", "children"),
+    [dash.dependencies.Input("blue-corner", "value")],
+)
+def setBlueNick(fighter):
+    nick = fighter_service.getNickname(fighter)
+    return """
+        "{nick}"
+    """
 
 
 @app.callback(
