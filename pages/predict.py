@@ -24,8 +24,7 @@ select_red_column = dbc.Col(
             id="red-corner",
             options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
         ),
-        dcc.Markdown("""
-        """, id="red-corner-nick"),
+        html.Div([], id="red-corner-nick"),
     ],
     md=4,
     className="red-corner"
@@ -42,8 +41,7 @@ select_blue_column = dbc.Col(
             id="blue-corner",
             options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
         ),
-        dcc.Markdown("""
-        """, id="blue-corner-nick"),
+        html.Div([], id="blue-corner-nick"),
     ],
     md=4,
     className="blue-corner"
@@ -59,7 +57,7 @@ buffer_column = dbc.Col(
 layout = html.Div([
     dbc.Row([select_red_column, buffer_column, select_blue_column]),
     dbc.Row([
-        dbc.Col([], id="results")
+        dbc.Col([], id="results", class="ml-3")
     ])
 ])
 
@@ -71,9 +69,9 @@ layout = html.Div([
 )
 def setRedNick(fighter):
     nick = fighter_service.getNickname(fighter)
-    return """
+    return dcc.Markdown(f"""
         "{nick}"
-    """
+    """)
 
 
 @app.callback(
@@ -82,9 +80,9 @@ def setRedNick(fighter):
 )
 def setBlueNick(fighter):
     nick = fighter_service.getNickname(fighter)
-    return """
+    return dcc.Markdown(f"""
         "{nick}"
-    """
+    """)
 
 
 @app.callback(
@@ -96,11 +94,12 @@ def setBlueNick(fighter):
 )
 def makePrediction(r_fighter, b_fighter):
 
-    winner = np.random.choice([r_fighter, b_fighter])
+    prob, winner = fighter_service.doPrediction(r_fighter, b_fighter)
 
     return [
         dcc.Markdown(f"""
             ### Winner: {winner}
+            confidence: {prob}
         """)
     ]
 

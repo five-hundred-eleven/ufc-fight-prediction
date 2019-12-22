@@ -71,4 +71,4 @@ def displayPage(path_name):
     elif path_name == "/predict":
         return predict.layout
     elif path_name == "/insights":
-        return predict.layout
+        return insights.layout
