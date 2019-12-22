@@ -17,8 +17,10 @@ class FighterService:
 
     def __init__(self):
 
-        self.__fighters_df = pd.read_csv("csv/fighters.csv")
-        self.__sherdog_df = pd.read_csv("csv/ALL UFC FIGHTERS 2_23_2016 SHERDOG.COM - Sheet1.csv")
+        sherdog_df = pd.read_csv("csv/ALL UFC FIGHTERS 2_23_2016 SHERDOG.COM - Sheet1.csv")
+        sherdog_fighters = list(sherdog_df["name"])
+        sherdog_nicks = list(sherdog_df["nick"])
+        self.__fighters_to_nicks = {f: n for f, n in zip(sherdog_fighters, sherdog_nicks)}
 
         with open("pickles/pipeline.pickle", "rb") as f:
             self.__pipeline = pickle.load(f)
@@ -26,9 +28,12 @@ class FighterService:
         with open("pickles/features.pickle", "rb") as f:
             self.__features = pickle.load(f)
 
+        fighters_df = pd.read_csv("csv/fighters.csv")
+        self.__fighters = tuple(set(fighters_df["fighter"]))
+
         prefix_re = re.compile(r".*(_opponent)|(_ratio)$")
 
-        fighters_individual_df = self.__fighters_df[[col for col in self.__fighters_df.columns.drop(["is_winner"]) if not prefix_re.match(col)]]
+        fighters_individual_df = fighters_df[[col for col in fighters_df.columns.drop(["is_winner"]) if not prefix_re.match(col)]]
         self.__latest_fights = fighters_individual_df.sort_values(by="date").groupby("fighter").tail(1)
 
 
@@ -40,12 +45,10 @@ class FighterService:
             @rtype: str
         """
 
-        fighter = self.__sherdog_df[self.__sherdog_df["name"] == fighter]
-
-        if len(fighter) == 0:
+        if fighter not in self.__fighters_to_nicks:
             return ""
 
-        return fighter.iloc[0]["nick"]
+        return self.__fighters_to_nicks[fighter]
 
 
     def getAllFighters(self):
@@ -54,7 +57,7 @@ class FighterService:
 
             @rtype: List[str]
         """
-        return list(self.__fighters_df["fighter"])
+        return self.__fighters
 
 
     def doPrediction(self, red_fighter, blue_fighter):
@@ -78,7 +81,7 @@ class FighterService:
             return 1.0, "-"
 
         bout = self.__makeBoutDf(red_fighter, blue_fighter)
-        if not bout:
+        if bout is None:
             return 1.0, "-"
 
         probas = self.__scoreBout(bout)

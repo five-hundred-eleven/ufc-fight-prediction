@@ -69,9 +69,13 @@ layout = html.Div([
 )
 def setRedNick(fighter):
     nick = fighter_service.getNickname(fighter)
-    return dcc.Markdown(f"""
-        "{nick}"
-    """)
+
+    if nick:
+        return dcc.Markdown(f"""
+            "{nick}"
+        """)
+    else:
+        return dcc.Markdown("")
 
 
 @app.callback(
@@ -80,9 +84,13 @@ def setRedNick(fighter):
 )
 def setBlueNick(fighter):
     nick = fighter_service.getNickname(fighter)
-    return dcc.Markdown(f"""
-        "{nick}"
-    """)
+
+    if nick:
+        return dcc.Markdown(f"""
+            "{nick}"
+        """)
+    else:
+        return dcc.Markdown("")
 
 
 @app.callback(
