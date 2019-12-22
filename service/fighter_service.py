@@ -26,7 +26,7 @@ class FighterService:
         with open("pickles/pipeline.pickle", "rb") as f:
             self.__pipeline = pickle.load(f)
 
-        self.__explainer = shap.TreeExplainer(self.__pipeline.named_steps["randomforestclassifier"], feature_perturbation="interventional")
+        self.__explainer = shap.TreeExplainer(self.__pipeline.named_steps["xgbclassifier"])
 
         with open("pickles/features.pickle", "rb") as f:
             self.__features = pickle.load(f)
@@ -160,7 +160,7 @@ class FighterService:
         shap_values = self.__explainer.shap_values(bout_t)
         shaps = pd.DataFrame(data=shap_values, columns=bout_t.columns)
 
-        proba_values = self.__pipeline["randomforestclassifier"].predict_proba(bout_t)
+        proba_values = self.__pipeline["xgbclassifier"].predict_proba(bout_t)
         probas = pd.DataFrame(data=proba_values, columns=[str(x) for x in self.__pipeline.classes_])
 
         return probas, shaps
