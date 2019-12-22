@@ -32,6 +32,10 @@
     background-size: cover;
 }
 
+#footer a {
+    color: #511;
+}
+
 
 #page-content {
     min-height: calc(100vh - 176px);
@@ -57,4 +61,12 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+}
+
+#red-corner-nick, #blue-corner-nick {
+    margin-top: 10px;
+}
+
+#results p {
+    font-size: 14pt;
 }

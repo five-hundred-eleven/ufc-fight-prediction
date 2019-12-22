@@ -35,6 +35,7 @@ class FighterService:
 
         fighters_individual_df = fighters_df[[col for col in fighters_df.columns.drop(["is_winner"]) if not prefix_re.match(col)]]
         self.__latest_fights = fighters_individual_df.sort_values(by="date").groupby("fighter").tail(1)
+        self.__latest_fights = self.__latest_fights[self.__features]
 
 
     def getNickname(self, fighter):
@@ -49,7 +50,7 @@ class FighterService:
             return ""
 
         nick = self.__fighters_to_nicks[fighter]
-        if nick.lower() == "nan":
+        if nick == np.NaN:
             return ""
 
         return nick
