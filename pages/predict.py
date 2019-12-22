@@ -57,7 +57,7 @@ buffer_column = dbc.Col(
 layout = html.Div([
     dbc.Row([select_red_column, buffer_column, select_blue_column]),
     dbc.Row([
-        dbc.Col([], id="results", className="ml-3")
+        dbc.Col([], id="results", md=4, className="mx-auto")
     ])
 ])
 
