@@ -154,14 +154,17 @@ class FighterService:
 
         bout_t = bout[self.__features]
 
-        for name, transformer in self.__pipeline.steps[:-1]:
-            bout_t = transformer.transform(bout_t)
+        _, ohe = self.__pipeline.steps[0]
+        bout_ohe = ohe.transform(bout_t)
 
-        proba_values = self.__pipeline["xgbclassifier"].predict_proba(bout_t)
+        _, si = self.__pipeline.steps[1]
+        bout_si = si.transform(bout_ohe)
+
+        proba_values = self.__pipeline["xgbclassifier"].predict_proba(bout_si)
         probas = pd.DataFrame(data=proba_values, columns=[str(x) for x in self.__pipeline.classes_])
 
-        shap_values = self.__explainer.shap_values(bout_t, check_additivity=False)
-        shaps = pd.DataFrame(data=shap_values, columns=bout_t.columns)
+        shap_values = self.__explainer.shap_values(bout_si, check_additivity=False)
+        shaps = pd.DataFrame(data=shap_values, columns=bout_ohe.columns)
 
         return probas, shaps
 
