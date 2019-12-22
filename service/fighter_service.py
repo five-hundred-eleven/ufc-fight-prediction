@@ -79,20 +79,20 @@ class FighterService:
         """
 
         if red_fighter and not blue_fighter:
-            return 1.0, red_fighter
+            return [], 1.0, red_fighter
 
         if not red_fighter and blue_fighter:
-            return 1.0, blue_fighter
+            return [], 1.0, blue_fighter
 
         if not red_fighter and not blue_fighter:
-            return 1.0, "-"
+            return [], 1.0, "-"
 
         if red_fighter == blue_fighter:
-            return 1.0, red_fighter
+            return [], 1.0, red_fighter
 
         bout = self.__makeBoutDf(red_fighter, blue_fighter)
         if bout is None:
-            return 1.0, "-"
+            return [], 1.0, "-"
 
         probas, shaps = self.__scoreBout(bout)
 
@@ -154,7 +154,7 @@ class FighterService:
 
         bout_t = bout[self.__features]
 
-        for name, transformer in self.steps[:-1]:
+        for name, transformer in self.__pipeline.steps[:-1]:
             bout_t = transformer.transform(bout_t)
 
         shap_values = self.__explainer.shap_values(bout_t)

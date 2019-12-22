@@ -41,7 +41,6 @@ select_blue_column = dbc.Col(
             id="blue-corner",
             options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
         ),
-        html.Hr(),
         html.Div([], id="blue-corner-nick"),
     ],
     md=4,
