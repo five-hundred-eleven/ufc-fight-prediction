@@ -67,8 +67,21 @@ class FighterService:
             @returns: a tuple containing a float representing the confidence in the prediction,
                 and a string of the name of the winner.
         """
-        bout = makeBoutDf(red_fighter, blue_fighter)
-        probas = scoreBout(bout)
+
+        if red_fighter and not blue_fighter:
+            return 1.0, red_fighter
+
+        if not red_fighter and blue_fighter:
+            return 1.0, blue_fighter
+
+        if not red_fighter and not blue_fighter:
+            return 1.0, "-"
+
+        bout = self.__makeBoutDf(red_fighter, blue_fighter)
+        if not bout:
+            return 1.0, "-"
+
+        probas = self.__scoreBout(bout)
 
         red_fighter_prob = (probas.iloc[0]["True"] + probas.iloc[1]["False"])/2
         blue_fighter_prob = (probas.iloc[0]["False"] + probas.iloc[1]["True"])/2
@@ -88,8 +101,11 @@ class FighterService:
 
     def __makeBoutDf(self, fighter1, fighter2):
 
-        fighter1_df = getByFighter(fighter1)
-        fighter2_df = getByFighter(fighter2)
+        fighter1_df = self.__getByFighter(fighter1)
+        fighter2_df = self.__getByFighter(fighter2)
+
+        if len(fighter1_df) != 1 or len(fighter2_df) != 1:
+            return None
 
         fighter1_df["temp_id_"] = fighter2_df["temp_id_"] = np.random.randint(2**31)
         fighter1_df, fighter2_df = (
