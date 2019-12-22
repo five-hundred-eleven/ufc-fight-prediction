@@ -37,7 +37,7 @@ class FighterService:
         self.__latest_fights = fighters_individual_df.sort_values(by="date").groupby("fighter").tail(1)
 
 
-    def getNickname(fighter):
+    def getNickname(self, fighter):
         """
             Returns the nickname of the fighter, or an empty string if none found.
 
@@ -79,6 +79,9 @@ class FighterService:
 
         if not red_fighter and not blue_fighter:
             return 1.0, "-"
+
+        if red_fighter == blue_fighter:
+            return 1.0, red_fighter
 
         bout = self.__makeBoutDf(red_fighter, blue_fighter)
         if bout is None:
@@ -131,7 +134,7 @@ class FighterService:
 
 
     def __scoreBout(self, bout):
-        return pd.DataFrame(data=pipeline.predict_proba(bout[self.__features]), columns=[str(x) for x in pipeline.classes_])
+        return pd.DataFrame(data=self.__pipeline.predict_proba(bout[self.__features]), columns=[str(x) for x in self.__pipeline.classes_])
 
 
 
