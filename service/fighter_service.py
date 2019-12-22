@@ -6,9 +6,10 @@ import category_encoders as ce
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
 
+import shap
 import pickle
-
 import re
 
 
@@ -25,6 +26,8 @@ class FighterService:
         with open("pickles/pipeline.pickle", "rb") as f:
             self.__pipeline = pickle.load(f)
 
+        self.__explainer = shap.TreeExplainer(self.__pipeline.named_steps["randomforestclassifier"])
+
         with open("pickles/features.pickle", "rb") as f:
             self.__features = pickle.load(f)
 
@@ -35,7 +38,6 @@ class FighterService:
 
         fighters_individual_df = fighters_df[[col for col in fighters_df.columns.drop(["is_winner"]) if not prefix_re.match(col)]]
         self.__latest_fights = fighters_individual_df.sort_values(by="date").groupby("fighter").tail(1)
-        self.__latest_fights = self.__latest_fights[self.__features]
 
 
     def getNickname(self, fighter):
@@ -72,7 +74,7 @@ class FighterService:
             @type red_fighter: str
             @type blue_fighter: str
 
-            @returns: a tuple containing a float representing the confidence in the prediction,
+            @returns: a tuple containing the shap values, a float representing the confidence in the prediction,
                 and a string of the name of the winner.
         """
 
@@ -92,7 +94,7 @@ class FighterService:
         if bout is None:
             return 1.0, "-"
 
-        probas = self.__scoreBout(bout)
+        probas, shaps = self.__scoreBout(bout)
 
         red_fighter_prob = (probas.iloc[0]["True"] + probas.iloc[1]["False"])/2
         blue_fighter_prob = (probas.iloc[0]["False"] + probas.iloc[1]["True"])/2
@@ -100,10 +102,20 @@ class FighterService:
         print(red_fighter_prob, "+", blue_fighter_prob, "=", red_fighter_prob+blue_fighter_prob)
 
         if red_fighter_prob > blue_fighter_prob:
-            return red_fighter_prob, red_fighter
+            shap_values = shaps.iloc[0]
+            winner_prob = red_fighter_prob
+            winner = red_fighter
 
         else:
-            return blue_fighter_prob, blue_fighter
+            shap_values = shaps.iloc[1]
+            winner_prob = blue_fighter_prob
+            winner = blue_fighter
+
+        shap_values = shap_values.sort_values()
+        shap_values = list(shap_values.index[:2]) + list(shap_values.index[-2:])
+        print(shap_values)
+
+        return shap_values, winner_prob, winner
 
 
     def __getByFighter(self, fighter_name):
@@ -139,7 +151,19 @@ class FighterService:
 
 
     def __scoreBout(self, bout):
-        return pd.DataFrame(data=self.__pipeline.predict_proba(bout[self.__features]), columns=[str(x) for x in self.__pipeline.classes_])
+
+        bout_t = bout[self.__features]
+
+        for name, transformer in self.steps[:-1]:
+            bout_t = transformer.transform(bout_t)
+
+        shap_values = self.__explainer.shap_values(bout_t)
+        shaps = pd.DataFrame(data=shap_values, columns=bout_t.columns)
+
+        proba_values = self.__pipeline["randomforestclassifier"].predict_proba(bout_t)
+        probas = pd.DataFrame(data=proba_values, columns=[str(x) for x in self.__pipeline.classes_])
+
+        return probas, shaps
 
 
 

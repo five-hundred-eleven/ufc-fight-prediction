@@ -24,7 +24,6 @@ select_red_column = dbc.Col(
             id="red-corner",
             options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
         ),
-        html.Hr(),
         html.Div([], id="red-corner-nick"),
     ],
     md=4,
@@ -104,7 +103,7 @@ def setBlueNick(fighter):
 )
 def makePrediction(r_fighter, b_fighter):
 
-    prob, winner = fighter_service.doPrediction(r_fighter, b_fighter)
+    shap, prob, winner = fighter_service.doPrediction(r_fighter, b_fighter)
 
     return [
         dcc.Markdown(f"""
