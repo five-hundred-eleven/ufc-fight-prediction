@@ -108,6 +108,7 @@ def makePrediction(r_fighter, b_fighter):
         dcc.Markdown(f"""
             ### Winner: {winner}
             confidence: {prob:.2f}%
+            Most significant factors: {shap}
         """)
     ]
 

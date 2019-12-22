@@ -26,7 +26,7 @@ class FighterService:
         with open("pickles/pipeline.pickle", "rb") as f:
             self.__pipeline = pickle.load(f)
 
-        self.__explainer = shap.TreeExplainer(self.__pipeline.named_steps["randomforestclassifier"])
+        self.__explainer = shap.TreeExplainer(self.__pipeline.named_steps["randomforestclassifier"], feature_perturbation="interventional")
 
         with open("pickles/features.pickle", "rb") as f:
             self.__features = pickle.load(f)
@@ -79,20 +79,20 @@ class FighterService:
         """
 
         if red_fighter and not blue_fighter:
-            return [], 1.0, red_fighter
+            return [], 100.0, red_fighter
 
         if not red_fighter and blue_fighter:
-            return [], 1.0, blue_fighter
+            return [], 100.0, blue_fighter
 
         if not red_fighter and not blue_fighter:
-            return [], 1.0, "-"
+            return [], 100.0, "-"
 
         if red_fighter == blue_fighter:
-            return [], 1.0, red_fighter
+            return [], 100.0, red_fighter
 
         bout = self.__makeBoutDf(red_fighter, blue_fighter)
         if bout is None:
-            return [], 1.0, "-"
+            return [], 100.0, "-"
 
         probas, shaps = self.__scoreBout(bout)
 
