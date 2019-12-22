@@ -48,7 +48,11 @@ class FighterService:
         if fighter not in self.__fighters_to_nicks:
             return ""
 
-        return self.__fighters_to_nicks[fighter]
+        nick = self.__fighters_to_nicks[fighter]
+        if nick.lower() == "nan":
+            return ""
+
+        return nick
 
 
     def getAllFighters(self):

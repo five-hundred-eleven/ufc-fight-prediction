@@ -41,6 +41,7 @@
 .red-corner, .blue-corner, .bruce-buffer {
     text-align: center;
     height: 300px;
+    font-size: 14pt;
 }
 
 .red-corner {

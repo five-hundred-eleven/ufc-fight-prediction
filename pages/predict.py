@@ -17,13 +17,14 @@ from service.fighter_service import fighter_service
 select_red_column = dbc.Col(
     [
         dcc.Markdown("""
-            fighting out of the
+            ##### fighting out of the
             ### RED CORNER
         """), 
         dcc.Dropdown(
             id="red-corner",
             options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
         ),
+        html.Hr(),
         html.Div([], id="red-corner-nick"),
     ],
     md=4,
@@ -34,13 +35,14 @@ select_red_column = dbc.Col(
 select_blue_column = dbc.Col(
     [
         dcc.Markdown("""
-            fighting out of the
+            ##### fighting out of the
             ### BLUE CORNER
         """), 
         dcc.Dropdown(
             id="blue-corner",
             options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
         ),
+        html.Hr(),
         html.Div([], id="blue-corner-nick"),
     ],
     md=4,
@@ -72,7 +74,7 @@ def setRedNick(fighter):
 
     if nick:
         return dcc.Markdown(f"""
-            "{nick}"
+            ##### "{nick}"
         """)
     else:
         return dcc.Markdown("")
@@ -87,7 +89,7 @@ def setBlueNick(fighter):
 
     if nick:
         return dcc.Markdown(f"""
-            "{nick}"
+            ##### "{nick}"
         """)
     else:
         return dcc.Markdown("")
