@@ -23,6 +23,9 @@ class FighterService:
         sherdog_nicks = list(sherdog_df["nick"])
         self.__fighters_to_nicks = {f: n for f, n in zip(sherdog_fighters, sherdog_nicks)}
 
+        with open("pickles/feature_to_name.pickle", "rb") as f:
+            self.__feature_to_name = pickle.load(f)
+
         with open("pickles/pipeline.pickle", "rb") as f:
             self.__pipeline = pickle.load(f)
 
@@ -52,7 +55,7 @@ class FighterService:
             return ""
 
         nick = self.__fighters_to_nicks[fighter]
-        if nick == np.NaN:
+        if nick in (np.NaN, "nan"):
             return ""
 
         return nick
@@ -74,8 +77,11 @@ class FighterService:
             @type red_fighter: str
             @type blue_fighter: str
 
-            @returns: a tuple containing the shap values, a float representing the confidence in the prediction,
-                and a string of the name of the winner.
+            @rtype: tuple
+                - float of the percentage confidence of the prediction
+                - str of the name of the winner
+                - list of the names of the most significant features
+                - list of the names of the most signficant counterargument features
         """
 
         if red_fighter and not blue_fighter:
@@ -112,10 +118,10 @@ class FighterService:
             winner = blue_fighter
 
         shap_values = shap_values.sort_values()
-        shap_values = list(shap_values.index[:2]) + list(shap_values.index[-2:])
-        print(shap_values)
+        pos_shaps = [self.__feature_to_name[s] for sin in shap_values.index[:3]]
+        neg_shaps = [self.__feature_to_name[s] for sin in shap_values.index[-3:]]
 
-        return shap_values, winner_prob, winner
+        return winner_prob*100, winner, pos_shaps, neg_shaps
 
 
     def __getByFighter(self, fighter_name):

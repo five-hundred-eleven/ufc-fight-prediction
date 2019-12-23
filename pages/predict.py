@@ -102,13 +102,29 @@ def setBlueNick(fighter):
 )
 def makePrediction(r_fighter, b_fighter):
 
-    shap, prob, winner = fighter_service.doPrediction(r_fighter, b_fighter)
+    prob, winner, pos_shaps, neg_shaps = fighter_service.doPrediction(r_fighter, b_fighter)
+
+    pos1, pos2, pos3 = pos_shaps
+    neg3, neg2, neg1 = neg_shaps
+
+    loser = r_fighter if r_fighter == winner else b_fighter
 
     return [
         dcc.Markdown(f"""
             ### Winner: {winner}
-            confidence: {prob:.2f}%
-            Most significant factors: {shap}
+
+            ##### confidence: {prob:.2f}%
+
+            ### Significant Factors in Favor of {winner}
+            * {pos1}
+            * {pos2}
+            * {pos3}
+
+            ### Signficant Factors in Favor of {loser}
+            * {neg1}
+            * {neg2}
+            * {neg3}
+
         """)
     ]
 
