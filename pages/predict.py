@@ -104,17 +104,23 @@ def makePrediction(r_fighter, b_fighter):
 
     prob, winner, pos_shaps, neg_shaps = fighter_service.doPrediction(r_fighter, b_fighter)
 
-    pos1, pos2, pos3 = pos_shaps
-    neg3, neg2, neg1 = neg_shaps
-
     loser = r_fighter if r_fighter == winner else b_fighter
 
-    return [
-        dcc.Markdown(f"""
+    if winner == "-":
+        return dcc.Markdown("")
+
+    s = f"""
             ### Winner: {winner}
 
             ##### confidence: {prob:.2f}%
+    """
 
+    if pos_shaps and neg_shaps:
+
+        pos1, pos2, pos3 = pos_shaps
+        neg3, neg2, neg1 = neg_shaps
+
+        s = s + f"""
             ### Significant Factors in Favor of {winner}
             * {pos1}
             * {pos2}
@@ -124,7 +130,10 @@ def makePrediction(r_fighter, b_fighter):
             * {neg1}
             * {neg2}
             * {neg3}
+        """
 
+    return [
+        dcc.Markdown(f"""
         """)
     ]
 

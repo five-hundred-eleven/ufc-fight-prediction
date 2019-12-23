@@ -85,20 +85,20 @@ class FighterService:
         """
 
         if red_fighter and not blue_fighter:
-            return [], 100.0, red_fighter
+            return 100.0, red_fighter, [], []
 
         if not red_fighter and blue_fighter:
-            return [], 100.0, blue_fighter
+            return 100.0, blue_fighter, [], []
 
         if not red_fighter and not blue_fighter:
-            return [], 100.0, "-"
+            return 100.0, "-", [], []
 
         if red_fighter == blue_fighter:
-            return [], 100.0, red_fighter
+            return 100.0, red_fighter, [], []
 
         bout = self.__makeBoutDf(red_fighter, blue_fighter)
         if bout is None:
-            return [], 100.0, "-"
+            return 100.0, "-", [], []
 
         probas, shaps = self.__scoreBout(bout)
 
@@ -118,8 +118,8 @@ class FighterService:
             winner = blue_fighter
 
         shap_values = shap_values.sort_values()
-        pos_shaps = [self.__feature_to_name[s] for sin in shap_values.index[:3]]
-        neg_shaps = [self.__feature_to_name[s] for sin in shap_values.index[-3:]]
+        pos_shaps = [self.__feature_to_name[s] for s in in shap_values.index[:3]]
+        neg_shaps = [self.__feature_to_name[s] for s in in shap_values.index[-3:]]
 
         return winner_prob*100, winner, pos_shaps, neg_shaps
 
