@@ -104,7 +104,7 @@ def makePrediction(r_fighter, b_fighter):
 
     prob, winner, pos_shaps, neg_shaps = fighter_service.doPrediction(r_fighter, b_fighter)
 
-    loser = r_fighter if r_fighter == winner else b_fighter
+    loser = b_fighter if r_fighter == winner else r_fighter
 
     if winner == "-":
         return dcc.Markdown("")
@@ -120,17 +120,35 @@ def makePrediction(r_fighter, b_fighter):
         pos1, pos2, pos3 = pos_shaps
         neg3, neg2, neg1 = neg_shaps
 
-        s = s + f"""
+        s += f"""
             ### Significant Factors in Favor of {winner}
             * {pos1}
-            * {pos2}
-            * {pos3}
+        """
 
+        if pos2 != pos1:
+            s += f"""
+                * {pos2}
+            """
+
+        if pos3 not in [pos1, pos2]:
+            s += f"""
+                * {pos3}
+            """
+
+        s += f"""
             ### Signficant Factors in Favor of {loser}
             * {neg1}
-            * {neg2}
-            * {neg3}
         """
+
+        if neg2 != neg1:
+            s += f"""
+                * {neg2}
+            """
+
+        if neg3 not in [neg1, neg2]:
+            s += f"""
+                * {neg3}
+            """
 
     return [
         dcc.Markdown(s)
