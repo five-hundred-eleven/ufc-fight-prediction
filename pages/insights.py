@@ -15,16 +15,9 @@ column1 = dbc.Col(
     [
         dcc.Markdown(
             """
-                ### Blah
-
-                blah blah blah
-
-                blah blah
-
-                blah blah blah
+                ### Under Construction
             """
         ),
-        dcc.Link(dbc.Button("Predict"), href="/predictions"),
     ],
     md=4,
 )

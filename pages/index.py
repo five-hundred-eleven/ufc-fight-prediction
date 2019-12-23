@@ -16,16 +16,23 @@ column1 = dbc.Col(
     [
         dcc.Markdown(
             """
-                ### Blah
+                ### Which Fighter Would Win?
 
-                blah blah blah
+                In the UFC, the Vegas Odds for a given fight show who is the favorite and who is the underdog.
+                Those who have insights on the fighters stand to make a lot of money on bets.
 
-                blah blah
+                Besides for the bets, it's inherently interesting for MMA enthusiasts to think about which fighter would
+                win a given fight.
 
-                blah blah blah
+                The purpose of this project was to use data analysis to determine who would win. Note that we allow 
+                for fighters from **different eras** and **different weight classes** to be compared. Long-retired fighters
+                are imagined to be in their primes, and any two fighters being compared are imagined to be fighting at
+                the same weight.
+
+                Try out the app, and learn more about the technology on the [insights page](/insights).
             """
         ),
-        dcc.Link(dbc.Button("Predict"), href="/predictions"),
+        dcc.Link(dbc.Button("Predict a Fight"), href="/predict"),
     ],
     md=4,
 )
