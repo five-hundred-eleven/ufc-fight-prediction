@@ -133,7 +133,6 @@ def makePrediction(r_fighter, b_fighter):
         """
 
     return [
-        dcc.Markdown(f"""
-        """)
+        dcc.Markdown(s)
     ]
 
