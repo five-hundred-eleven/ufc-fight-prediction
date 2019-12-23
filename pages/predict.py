@@ -127,12 +127,12 @@ def makePrediction(r_fighter, b_fighter):
 
         if pos2 != pos1:
             s += f"""
-                * {pos2}
+            * {pos2}
             """
 
         if pos3 not in [pos1, pos2]:
             s += f"""
-                * {pos3}
+            * {pos3}
             """
 
         s += f"""
@@ -142,12 +142,12 @@ def makePrediction(r_fighter, b_fighter):
 
         if neg2 != neg1:
             s += f"""
-                * {neg2}
+            * {neg2}
             """
 
         if neg3 not in [neg1, neg2]:
             s += f"""
-                * {neg3}
+            * {neg3}
             """
 
     return [
