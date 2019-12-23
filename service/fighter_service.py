@@ -118,8 +118,8 @@ class FighterService:
             winner = blue_fighter
 
         shap_values = shap_values.sort_values()
-        pos_shaps = [self.__feature_to_name[s] for s in in shap_values.index[:3]]
-        neg_shaps = [self.__feature_to_name[s] for s in in shap_values.index[-3:]]
+        pos_shaps = [self.__feature_to_name[s] for s in shap_values.index[:3]]
+        neg_shaps = [self.__feature_to_name[s] for s in shap_values.index[-3:]]
 
         return winner_prob*100, winner, pos_shaps, neg_shaps
 
