@@ -11,26 +11,54 @@ from app import app
 
 import numpy as np
 
-column1 = dbc.Col(
+column00 = dbc.Col(
     [
         dcc.Markdown(
             """
-                ### Under Construction
+                ### Positive Features
+
+                This graphic shows features that were highly predictive of the winner.
+                The green bars are the best estimate of predictiveness and the thin bars
+                are the margin of error.
+                
+                Here are some notes to help you interpret it:
+                * Features **not** ending in "\_opponent" are features of the red fighter. 
+                * Features that **do** end in "\_opponent" are features of the blue fighter.
+                * Features ending in "\_ratio" are the feature of the red fighter over the feature of the blue fighter.
+                * Features containing "\_opp\_" represent the average of that action that the fighter **receives** during fights.
+                * "att" usually means attempts
+                * "td" usually means takedowns
             """
         ),
     ],
     md=4,
 )
+column01 = html.Img(src="/img/positive-features.png")
 
-
-fig = go.Figure(
-    data=go.Scatter(x=np.random.randint(0, 100, 100), y=np.random.randint(0, 100, 100))
-)
-
-column2 = dbc.Col(
+column10 = dbc.Col(
     [
-        dcc.Graph(figure=fig),
-    ],
-)
+        dcc.Markdown(
+            """
+                ### Negative Features
 
-layout = dbc.Row([column1, column2])
+                This graphic shows features that caused predictions to become worse when included in the analysis.
+            """
+        ),
+    ],
+    md=4,
+)
+column11 = html.Img(src="/img/negative-features.png")
+
+layout = html.Div([
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown("""
+                # Insights
+
+                For full methodology, consult [this notebook](https://github.com/ekoly/ufc-fight-prediction/blob/master/ipynb/ufc-predictions.ipynb).
+            """)
+        ])
+    ]),
+    dbc.Row([column00, column01]),
+    dbc.Row([column10, column11]),
+])
