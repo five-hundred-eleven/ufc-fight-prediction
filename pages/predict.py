@@ -84,7 +84,7 @@ def getFighterStats(fighter):
     wins = fighter_service.getWins(fighter)
     losses = fighter_service.getLosses(fighter)
 
-    s += """
+    s += f"""
 
         reach: {reach}
 

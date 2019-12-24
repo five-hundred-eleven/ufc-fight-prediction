@@ -96,11 +96,7 @@ class FighterService:
         if fighter not in self.__fighters_to_reach:
             return "-"
 
-        reach = self.__fighters_to_reach[fighter]
-        if nick in (np.NaN, "nan"):
-            return "-"
-
-        return reach
+        return self.__fighters_to_reach[fighter]
 
 
     def getWins(self, fighter):
@@ -114,11 +110,7 @@ class FighterService:
         if fighter not in self.__fighters_to_wins:
             return "-"
 
-        wins = self.__fighters_to_wins[fighter]
-        if wins in (np.NaN, "nan"):
-            return "-"
-
-        return wins
+        return self.__fighters_to_wins[fighter]
 
 
     def getLosses(self, fighter):
@@ -132,11 +124,8 @@ class FighterService:
         if fighter not in self.__fighters_to_losses:
             return "-"
 
-        losses = self.__fighters_to_losses[fighter]
-        if losses in (np.NaN, "nan"):
-            return "-"
+        return self.__fighters_to_losses[fighter]
 
-        return losses
 
     def getAllFighters(self):
         """
