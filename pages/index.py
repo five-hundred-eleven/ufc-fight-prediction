@@ -40,13 +40,15 @@ column1 = dbc.Col(
 )
 
 fighters_df = fighter_service.getFightersDF()
-fig = go.Histogram2dContour(
-    x = fighters_df["Reach_cms_ratio"],
-    y = fighters_df["avg_SIG_STlanded"],
-    z = fighters_df["is_winner"].replace({False: -1, True: 1}),
-    ncontours=20,
-    colorscale="Hot",
-    showscale=False,
+fig = go.Figure(
+    go.Histogram2dContour(
+        x = fighters_df["Reach_cms_ratio"],
+        y = fighters_df["avg_SIG_STlanded"],
+        z = fighters_df["is_winner"].replace({False: -1, True: 1}),
+        ncontours=20,
+        colorscale="Hot",
+        showscale=False,
+    ),
 )
 fig.update_layout({
     "title": "Reach and Number of Significant Strikes vs Winner",
