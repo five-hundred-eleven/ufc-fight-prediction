@@ -51,7 +51,7 @@ class FighterService:
         }
 
         self.__fighters_to_height = {
-                f: (str(h) + " cms") if r != np.NaN else "-"
+                f: (str(h) + " cms") if h != np.NaN else "-"
                 for f, h in zip(
                     self.__latest_fights["fighter"],
                     self.__latest_fights["Height_cms"]
