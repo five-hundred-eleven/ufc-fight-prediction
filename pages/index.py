@@ -42,13 +42,13 @@ column1 = dbc.Col(
 fighters_df = fighter_service.getFightersDF()
 fig = go.Figure(
     data=go.Scatter(
-        x=fighters_df["Reach_cms"],
+        x=fighters_df["Reach_cms_ratio"],
         y=fighters_df["age_ratio"],
-        marker_color=fighters_df["is_winner"],
+        marker_color=fighters_df["is_winner"].replace({False: 0, True: 1}),
         mode="markers",
     ),
-    layout=go.Layout(title="Age and Reach vs. Winner"),
 )
+fig.update_layout({"title": "Reach and Age vs Winner"})
 
 column2 = dbc.Col(
     [
