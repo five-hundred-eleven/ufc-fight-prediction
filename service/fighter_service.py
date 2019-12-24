@@ -50,6 +50,14 @@ class FighterService:
                 )
         }
 
+        self.__fighters_to_height = {
+                f: (str(h) + " cms") if r != np.NaN else "-"
+                for f, h in zip(
+                    self.__latest_fights["fighter"],
+                    self.__latest_fights["Height_cms"]
+                )
+        }
+
         self.__fighters_to_wins = {
                 f: str(int(w)) if w != np.NaN else "-"
                 for f, w in zip(
@@ -97,6 +105,20 @@ class FighterService:
             return "-"
 
         return self.__fighters_to_reach[fighter]
+
+
+    def getHeight(self, fighter):
+        """
+            Returns the height of the fighter, or "-" if none found.
+
+            @type fighter: str
+            @rtype: str
+        """
+
+        if fighter not in self.__fighters_to_height:
+            return "-"
+
+        return self.__fighters_to_height[fighter]
 
 
     def getWins(self, fighter):

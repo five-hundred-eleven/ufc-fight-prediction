@@ -79,12 +79,15 @@ def getFighterStats(fighter):
         s = ""
 
     reach = fighter_service.getReach(fighter)
+    height = fighter_service.getHeight(fighter)
     wins = fighter_service.getWins(fighter)
     losses = fighter_service.getLosses(fighter)
 
     s += f"""
 
         reach: {reach}
+
+        height: {height}
 
     """
 
