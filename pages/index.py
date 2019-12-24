@@ -40,9 +40,9 @@ column1 = dbc.Col(
 )
 
 fighters_df = fighter_service.getFightersDF()
-fig = px.scatter(fighters_df, x="Reach_cms_ratio", y="avg_SIG_STlanded_ratio", color="is_winner")
+fig = px.scatter(fighters_df, x="Reach_cms_ratio", y="avg_SIG_STlanded", color="is_winner")
 fig.update_layout({
-    "title": "Reach and Age vs Winner",
+    "title": "Reach and Number of Significant Strikes vs Winner",
 })
 
 column2 = dbc.Col(
