@@ -33,7 +33,7 @@ column00 = dbc.Col(
     ],
     md=4,
 )
-column01 = html.Img(src="/img/positive-features.png")
+column01 = html.Img(id="pos-features", src="/img/positive-features.png")
 
 column10 = dbc.Col(
     [
@@ -47,7 +47,7 @@ column10 = dbc.Col(
     ],
     md=4,
 )
-column11 = html.Img(src="/img/negative-features.png")
+column11 = html.Img(id="neg-features", src="/img/negative-features.png")
 
 layout = html.Div([
     dbc.Row([

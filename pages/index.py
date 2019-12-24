@@ -40,7 +40,7 @@ column1 = dbc.Col(
 )
 
 fighters_df = fighter_service.getFightersDF()
-fig = px.scatter(fighters_df.replace({False: 0, True: 1}), x="Reach_cms_ratio", y="avg_SIG_STlanded", color="is_winner")
+fig = px.scatter(fighters_df.replace({False: -1, True: 1}), x="Reach_cms_ratio", y="avg_SIG_STlanded", color="is_winner")
 fig.update_layout({
     "title": "Reach and Number of Significant Strikes vs Winner",
 })

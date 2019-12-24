@@ -70,3 +70,13 @@
 #results p {
     font-size: 14pt;
 }
+
+#pos-features {
+    display: block;
+    z-index: 99;
+}
+
+#neg-features {
+    display: block;
+    z-index: 101;
+}
