@@ -62,20 +62,46 @@ layout = html.Div([
 ])
 
 
+def getFighterStats(fighter):
+    """
+        Gets the nickname, reach, wins, and losses of a fighter and formats it
+        into markdown.
+
+        @type fighter: str
+        @rtype: dcc.Markdown
+    """
+
+    nick = fighter_service.getNickname(fighter)
+
+    if nick:
+        s = f"""
+            #### "{nick}"
+        """
+    else:
+        s = ""
+
+    reach = fighter_service.getReach(fighter)
+    wins = fighter_service.getWins(fighter)
+    losses = fighter_service.getLosses(fighter)
+
+    s += """
+
+        reach: {reach}
+
+        wins: {wins}
+
+        losses: {losses}
+    """
+
+    return dcc.Markdown(s)
+        
 
 @app.callback(
     dash.dependencies.Output("red-corner-nick", "children"),
     [dash.dependencies.Input("red-corner", "value")],
 )
 def setRedNick(fighter):
-    nick = fighter_service.getNickname(fighter)
-
-    if nick:
-        return dcc.Markdown(f"""
-            ##### "{nick}"
-        """)
-    else:
-        return dcc.Markdown("")
+    return getFighterStats(fighter)
 
 
 @app.callback(
@@ -83,14 +109,7 @@ def setRedNick(fighter):
     [dash.dependencies.Input("blue-corner", "value")],
 )
 def setBlueNick(fighter):
-    nick = fighter_service.getNickname(fighter)
-
-    if nick:
-        return dcc.Markdown(f"""
-            ##### "{nick}"
-        """)
-    else:
-        return dcc.Markdown("")
+    return getFighterStats(fighter)
 
 
 @app.callback(

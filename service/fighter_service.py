@@ -18,6 +18,33 @@ class FighterService:
 
     def __init__(self):
 
+        self.__fighters_df = pd.read_csv("csv/fighters.csv")
+        self.__fighters = tuple(set(self.__fighters_df["fighter"]))
+
+        self.__fighters_to_reach = {
+                f: (str(r) + " cms") if r != np.NaN else "-"
+                for f, r in zip(
+                    self.__fighters_df["fighter"],
+                    self.__fighters_df["Reach_cms"]
+                )
+        }
+
+        self.__fighters_to_wins = {
+                f: str(int(w))
+                for f, w in zip(
+                    self.__fighters_df["fighter"],
+                    self.__fighters_df["wins"]
+                )
+        }
+
+        self.__fighters_to_losses = {
+                f: str(int(l))
+                for f, l in zip(
+                    self.__fighters_df["fighter"],
+                    self.__fighters_df["losses"]
+                )
+        }
+
         sherdog_df = pd.read_csv("csv/ALL UFC FIGHTERS 2_23_2016 SHERDOG.COM - Sheet1.csv")
         sherdog_fighters = list(sherdog_df["name"])
         sherdog_nicks = list(sherdog_df["nick"])
@@ -33,9 +60,6 @@ class FighterService:
 
         with open("pickles/features.pickle", "rb") as f:
             self.__features = pickle.load(f)
-
-        self.__fighters_df = pd.read_csv("csv/fighters.csv")
-        self.__fighters = tuple(set(self.__fighters_df["fighter"]))
 
         prefix_re = re.compile(r".*(_opponent)|(_ratio)$")
 
@@ -60,6 +84,59 @@ class FighterService:
 
         return nick
 
+
+    def getReach(self, fighter):
+        """
+            Returns the reach of the fighter, or "-" if none found.
+
+            @type fighter: str
+            @rtype: str
+        """
+
+        if fighter not in self.__fighters_to_reach:
+            return "-"
+
+        reach = self.__fighters_to_reach[fighter]
+        if nick in (np.NaN, "nan"):
+            return "-"
+
+        return reach
+
+
+    def getWins(self, fighter):
+        """
+            Returns the number of wins of the fighter, or "-" if none found.
+
+            @type fighter: str
+            @rtype: str
+        """
+
+        if fighter not in self.__fighters_to_wins:
+            return "-"
+
+        wins = self.__fighters_to_wins[fighter]
+        if wins in (np.NaN, "nan"):
+            return "-"
+
+        return wins
+
+
+    def getLosses(self, fighter):
+        """
+            Returns the number of losses of the fighter, or "-" if none found.
+
+            @type fighter: str
+            @rtype: str
+        """
+
+        if fighter not in self.__fighters_to_losses:
+            return "-"
+
+        losses = self.__fighters_to_losses[fighter]
+        if losses in (np.NaN, "nan"):
+            return "-"
+
+        return losses
 
     def getAllFighters(self):
         """
