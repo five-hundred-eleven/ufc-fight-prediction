@@ -83,13 +83,7 @@ def getFighterStats(fighter):
     wins = fighter_service.getWins(fighter)
     losses = fighter_service.getLosses(fighter)
 
-    s += f"""
-
-        reach: {reach}
-
-        height: {height}
-
-    """
+    s += f"\n\nreach: {reach}\n\nheight: {height}"
 
     return dcc.Markdown(s)
         
