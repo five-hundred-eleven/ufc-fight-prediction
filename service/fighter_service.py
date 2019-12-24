@@ -30,7 +30,7 @@ class FighterService:
         }
 
         self.__fighters_to_wins = {
-                f: str(int(w))
+                f: str(int(w)) if w != np.NaN else "-"
                 for f, w in zip(
                     self.__fighters_df["fighter"],
                     self.__fighters_df["wins"]
@@ -38,7 +38,7 @@ class FighterService:
         }
 
         self.__fighters_to_losses = {
-                f: str(int(l))
+                f: str(int(l)) if l != np.NaN else "-"
                 for f, l in zip(
                     self.__fighters_df["fighter"],
                     self.__fighters_df["losses"]
