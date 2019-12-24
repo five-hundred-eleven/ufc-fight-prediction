@@ -21,30 +21,6 @@ class FighterService:
         self.__fighters_df = pd.read_csv("csv/fighters.csv")
         self.__fighters = tuple(set(self.__fighters_df["fighter"]))
 
-        self.__fighters_to_reach = {
-                f: (str(r) + " cms") if r != np.NaN else "-"
-                for f, r in zip(
-                    self.__fighters_df["fighter"],
-                    self.__fighters_df["Reach_cms"]
-                )
-        }
-
-        self.__fighters_to_wins = {
-                f: str(int(w)) if w != np.NaN else "-"
-                for f, w in zip(
-                    self.__fighters_df["fighter"],
-                    self.__fighters_df["wins"]
-                )
-        }
-
-        self.__fighters_to_losses = {
-                f: str(int(l)) if l != np.NaN else "-"
-                for f, l in zip(
-                    self.__fighters_df["fighter"],
-                    self.__fighters_df["losses"]
-                )
-        }
-
         sherdog_df = pd.read_csv("csv/ALL UFC FIGHTERS 2_23_2016 SHERDOG.COM - Sheet1.csv")
         sherdog_fighters = list(sherdog_df["name"])
         sherdog_nicks = list(sherdog_df["nick"])
@@ -65,6 +41,30 @@ class FighterService:
 
         fighters_individual_df = self.__fighters_df[[col for col in self.__fighters_df.columns.drop(["is_winner"]) if not prefix_re.match(col)]]
         self.__latest_fights = fighters_individual_df.sort_values(by="date").groupby("fighter").tail(1)
+
+        self.__fighters_to_reach = {
+                f: (str(r) + " cms") if r != np.NaN else "-"
+                for f, r in zip(
+                    self.__latest_fights["fighter"],
+                    self.__latest_fights["Reach_cms"]
+                )
+        }
+
+        self.__fighters_to_wins = {
+                f: str(int(w)) if w != np.NaN else "-"
+                for f, w in zip(
+                    self.__latest_fights["fighter"],
+                    self.__latest_fights["wins"]
+                )
+        }
+
+        self.__fighters_to_losses = {
+                f: str(int(l)) if l != np.NaN else "-"
+                for f, l in zip(
+                    self.__latest_fights["fighter"],
+                    self.__latest_fights["losses"]
+                )
+        }
 
 
     def getNickname(self, fighter):

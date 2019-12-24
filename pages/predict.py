@@ -75,7 +75,7 @@ def getFighterStats(fighter):
 
     if nick:
         s = f"""
-            #### "{nick}"
+            ##### "{nick}"
         """
     else:
         s = ""
