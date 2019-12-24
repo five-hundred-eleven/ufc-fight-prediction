@@ -74,9 +74,7 @@ def getFighterStats(fighter):
     nick = fighter_service.getNickname(fighter)
 
     if nick:
-        s = f"""
-            ##### "{nick}"
-        """
+        s = f"##### \"{nick}\""
     else:
         s = ""
 
@@ -88,9 +86,6 @@ def getFighterStats(fighter):
 
         reach: {reach}
 
-        wins: {wins}
-
-        losses: {losses}
     """
 
     return dcc.Markdown(s)
