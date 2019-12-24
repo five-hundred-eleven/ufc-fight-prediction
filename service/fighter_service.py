@@ -34,12 +34,12 @@ class FighterService:
         with open("pickles/features.pickle", "rb") as f:
             self.__features = pickle.load(f)
 
-        fighters_df = pd.read_csv("csv/fighters.csv")
-        self.__fighters = tuple(set(fighters_df["fighter"]))
+        self.__fighters_df = pd.read_csv("csv/fighters.csv")
+        self.__fighters = tuple(set(self.__fighters_df["fighter"]))
 
         prefix_re = re.compile(r".*(_opponent)|(_ratio)$")
 
-        fighters_individual_df = fighters_df[[col for col in fighters_df.columns.drop(["is_winner"]) if not prefix_re.match(col)]]
+        fighters_individual_df = self.__fighters_df[[col for col in self.__fighters_df.columns.drop(["is_winner"]) if not prefix_re.match(col)]]
         self.__latest_fights = fighters_individual_df.sort_values(by="date").groupby("fighter").tail(1)
 
 
@@ -68,6 +68,15 @@ class FighterService:
             @rtype: List[str]
         """
         return self.__fighters
+
+
+    def getFightersDF(self):
+        """
+            Returns the fighters dataframe.
+
+            @rtype: pd.DataFrame
+        """
+        return self.__fighters_df
 
 
     def doPrediction(self, red_fighter, blue_fighter):

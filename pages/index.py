@@ -11,6 +11,8 @@ from app import app
 
 import numpy as np
 
+from service.fighter_service import fighter_service
+
 
 column1 = dbc.Col(
     [
@@ -37,9 +39,15 @@ column1 = dbc.Col(
     md=4,
 )
 
-
+fighters_df = fighter_service.getFightersDF()
 fig = go.Figure(
-    data=go.Scatter(x=np.random.randint(0, 100, 100), y=np.random.randint(0, 100, 100))
+    data=go.Scatter(
+        x=fighters_df["Reach_cms"],
+        y=fighters_df["age_ratio"],
+        marker_color=fighters_df["is_winner"],
+        mode="markers",
+    ),
+    layout=go.Layout(title="Age and Reach vs. Winner"),
 )
 
 column2 = dbc.Col(
