@@ -132,7 +132,7 @@ def makePrediction(r_fighter, b_fighter):
         neg3, neg2, neg1 = neg_shaps
 
         s += f"""
-            ### Significant Factors in Favor of {winner}
+            ### Best Attributes of {winner}
             * {pos1}
         """
 
@@ -147,7 +147,7 @@ def makePrediction(r_fighter, b_fighter):
             """
 
         s += f"""
-            ### Signficant Factors in Favor of {loser}
+            ### Best Attributes of {loser}
             * {neg1}
         """
 
