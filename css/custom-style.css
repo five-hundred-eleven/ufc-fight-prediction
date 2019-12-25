@@ -75,3 +75,7 @@
     display: block;
     z-index: 99;
 }
+
+#age-ratio, #reach-ratio, #win-streak {
+    background-color: white;
+}
