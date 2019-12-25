@@ -71,12 +71,7 @@
     font-size: 14pt;
 }
 
-#pos-features {
+#pos-features, #neg-features, #age-ratio, #reach-ratio, #win-streak {
     display: block;
     z-index: 99;
-}
-
-#neg-features {
-    display: block;
-    z-index: 101;
 }
