@@ -43,7 +43,7 @@ fighters_df = fighter_service.getFightersDF()
 fig = go.Figure(
     go.Histogram2dContour(
         x = fighters_df["Reach_cms_ratio"],
-        y = fighters_df["avg_SIG_STlanded"],
+        y = fighters_df["avg_SIG_STlanded_ratio"],
         z = fighters_df["is_winner"].replace({False: -1, True: 1}),
         ncontours=20,
         colorscale="Hot",
