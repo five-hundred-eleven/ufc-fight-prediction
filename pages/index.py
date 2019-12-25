@@ -40,11 +40,20 @@ column1 = dbc.Col(
 )
 
 fighters_df = fighter_service.getFightersDF()
+
+xs = fighters_df["Reach_cms_ratio"]
+xs = xs[(xs.quantile(0.05) < xs) & (xs < xs.quantile(0.95))]
+
+ys = fighters_df["avg_SIG_STlanded"]
+ys = ys[(ys.quantile(0.05) < ys) & (ys < ys.quantile(0.95))]
+
+zs = fighters_df["is_winner"].replace({False: -1, True: 1})
+
 fig = go.Figure(
     go.Histogram2dContour(
-        x = fighters_df["Reach_cms_ratio"],
-        y = fighters_df["avg_SIG_STlanded_ratio"],
-        z = fighters_df["is_winner"].replace({False: -1, True: 1}),
+        x = xs,
+        y = ys,
+        z = zs,
         ncontours=20,
         colorscale="Hot",
         showscale=False,
