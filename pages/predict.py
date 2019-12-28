@@ -89,8 +89,8 @@ layout = html.Div([
     [
         dash.dependencies.Output("red-corner", "options"),
         dash.dependencies.Output("blue-corner", "options"),
-        dash.dependencies.Output("red-corner-nick", "children"),
-        dash.dependencies.Output("blue-corner-nick", "children"),
+        dash.dependencies.Output("red-corner", "value"),
+        dash.dependencies.Output("blue-corner", "value"),
     ], [
         dash.dependencies.Input("weight-class-dropdown", "value"),
     ]
@@ -108,7 +108,7 @@ def setFightersByWeightClass(weight):
     if blue_fighter_ not in fighters:
         blue_fighter_ = None
 
-    return res, res, getFighterStats(red_fighter_), getFighterStats(blue_fighter_)
+    return res, res, red_fighter_, blue_fighter_
 
 
 def getFighterStats(fighter):
