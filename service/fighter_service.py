@@ -23,7 +23,7 @@ class FighterService:
         self.__fighters = tuple(set(self.__fighters_df["fighter"]))
 
         self.__weight_to_fighters = defaultdict(list)
-        for w, f in zip(self.__fighters_df["fighter"], self.__fighters_df["weight_class"]):
+        for f, w in zip(self.__fighters_df["fighter"], self.__fighters_df["weight_class"]):
             self.__weight_to_fighters[w].append(f)
 
         sherdog_df = pd.read_csv("csv/ALL UFC FIGHTERS 2_23_2016 SHERDOG.COM - Sheet1.csv")
