@@ -28,7 +28,7 @@ select_weight_column = dbc.Col(
             options=[
                 {"label": l, "value": v} for l, v in fighter_service.getWeightClasses()
             ],
-            value=None,
+            value="",
         ),
     ],
     md=4,

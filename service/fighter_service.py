@@ -200,7 +200,7 @@ class FighterService:
             ("Women's Bantamweight (135 lbs.)", "Women's Bantamweight",),
             ("Women's Flyweight (125 lbs.)", "Women's Flyweight",),
             ("Women's Strawweight (115 lbs.)", "Women's Strawweight",),
-            ('Open Weight', None),
+            ('Open Weight', ""),
         )
 
 
