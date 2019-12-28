@@ -39,7 +39,7 @@ select_red_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="red-corner",
-            options=[s for s in fighter_service.getAllFighters()]
+            options=fighter_service.getAllFighters(),
         ),
         html.Div([], id="red-corner-nick"),
     ],
@@ -56,7 +56,7 @@ select_blue_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="blue-corner",
-            options=[s for s in fighter_service.getAllFighters()]
+            options=fighter_service.getAllFighters(),
         ),
         html.Div([], id="blue-corner-nick"),
     ],
@@ -80,21 +80,31 @@ layout = html.Div([
 ])
 
 
+
+red_fighter_ = None
+blue_fighter_ = None
+
 @app.callback(
     [
         dash.dependencies.Output("red-corner", "options"),
         dash.dependencies.Output("blue-corner", "options"),
+        dash.dependencies.Output("red-corner", "value"),
+        dash.dependencies.Output("blue-corner", "value"),
     ], [
         dash.dependencies.Input("weight-class-dropdown", "value"),
     ]
 )
-def setFightersByWeightClass(weight):
+def setFightersByWeightClass(weight, red_fighter, blue_fighter):
 
-    res = [
-        {"label": s, "value": s} for s in fighter_service.getAllFighters(weight_class=weight)
-    ]
+    res = fighter_service.getAllFighters(weight_class=weight)
 
-    return res, res
+    if red_fighter_ not in res:
+        red_fighter_ = None
+
+    if blue_fighter not in res:
+        blue_fighter_ = None
+
+    return res, res, red_fighter_, blue_fighter_
 
 
 def getFighterStats(fighter):
@@ -105,6 +115,9 @@ def getFighterStats(fighter):
         @type fighter: str
         @rtype: dcc.Markdown
     """
+
+    if not fighter:
+        return dcc.Markdown("")
 
     nick = fighter_service.getNickname(fighter)
 
@@ -128,6 +141,7 @@ def getFighterStats(fighter):
     [dash.dependencies.Input("red-corner", "value")],
 )
 def setRedNick(fighter):
+    red_fighter_ = fighter
     return getFighterStats(fighter)
 
 
@@ -136,6 +150,7 @@ def setRedNick(fighter):
     [dash.dependencies.Input("blue-corner", "value")],
 )
 def setBlueNick(fighter):
+    blue_fighter_ = fighter
     return getFighterStats(fighter)
 
 
