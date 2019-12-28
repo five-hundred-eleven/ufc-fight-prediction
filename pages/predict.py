@@ -43,7 +43,7 @@ select_red_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="red-corner",
-            options=list(fighter_service.getAllFighters()),
+            options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()],
         ),
         html.Div([], id="red-corner-nick"),
     ],
@@ -60,7 +60,7 @@ select_blue_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="blue-corner",
-            options=list(fighter_service.getAllFighters()),
+            options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()],
         ),
         html.Div([], id="blue-corner-nick"),
     ],
@@ -89,26 +89,15 @@ layout = html.Div([
     [
         dash.dependencies.Output("red-corner", "options"),
         dash.dependencies.Output("blue-corner", "options"),
-        dash.dependencies.Output("red-corner", "value"),
-        dash.dependencies.Output("blue-corner", "value"),
     ], [
         dash.dependencies.Input("weight-class-dropdown", "value"),
     ]
 )
 def setFightersByWeightClass(weight):
 
+    res = [{"value": s, "label": s} for s in fighter_service.getAllFighters(weight_class=weight)]
 
-    global red_fighter_, blue_fighter_
-
-    res = list(fighter_service.getAllFighters(weight_class=weight))
-
-    if red_fighter_ not in res:
-        red_fighter_ = None
-
-    if blue_fighter_ not in res:
-        blue_fighter_ = None
-
-    return res, res, red_fighter_, blue_fighter_
+    return res, res
 
 
 def getFighterStats(fighter):
