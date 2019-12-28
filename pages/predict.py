@@ -94,7 +94,7 @@ blue_fighter_ = None
         dash.dependencies.Input("weight-class-dropdown", "value"),
     ]
 )
-def setFightersByWeightClass(weight, red_fighter, blue_fighter):
+def setFightersByWeightClass(weight):
 
     res = fighter_service.getAllFighters(weight_class=weight)
 
