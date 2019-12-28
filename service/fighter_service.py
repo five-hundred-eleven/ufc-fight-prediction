@@ -1,3 +1,4 @@
+from collections import defaultdict
 
 import numpy as np
 import pandas as pd
@@ -20,6 +21,10 @@ class FighterService:
 
         self.__fighters_df = pd.read_csv("csv/fighters.csv")
         self.__fighters = tuple(set(self.__fighters_df["fighter"]))
+
+        self.__weight_to_fighters = defaultdict(list)
+        for w, f in zip(self.__fighters_df["fighter"], self.__fighters_df["weight_class"]):
+            self.__weight_to_fighters[w].append(f)
 
         sherdog_df = pd.read_csv("csv/ALL UFC FIGHTERS 2_23_2016 SHERDOG.COM - Sheet1.csv")
         sherdog_fighters = list(sherdog_df["name"])
@@ -149,13 +154,31 @@ class FighterService:
         return self.__fighters_to_losses[fighter]
 
 
-    def getAllFighters(self):
+    def getAllFighters(self, weight_class=None):
         """
-            Returns a list of the names of all fighters.
+            Returns a list of the names of all fighters, or the subset
+            of fighters who have fought in `weight_class`.
 
-            @rtype: List[str]
+            @rtype: Tuple[str]
         """
-        return self.__fighters
+
+        if not weight_class:
+            return self.__fighters
+        
+        return tuple(
+            self.__weight_to_fighters[weight_class]
+        )
+
+
+    def getWeightClasses(self):
+        """
+            Returns a list of all weight classes.
+
+            @rtype: Tuple[str]
+        """
+        
+        fighters_df = self.__fighters_df
+        return tuple(self.__weight_to_fighters.keys())
 
 
     def getFightersDF(self):

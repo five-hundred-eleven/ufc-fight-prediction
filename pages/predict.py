@@ -14,6 +14,23 @@ import numpy as np
 from service.fighter_service import fighter_service
 
 
+select_weight_column = dbc.Col(
+    [
+        dcc.Markdown("""
+            #### Weight Class
+        """),
+        dcc.Dropdown(
+            id="weight-class-dropdown",
+            options=[{"label": "Any", "value": None}] + [
+                {"label": s, "value": s} for s in fighter_service.getWeightClasses()
+            ],
+            value=None,
+        ),
+    ],
+    md=4,
+    className="mx-auto",
+)
+
 select_red_column = dbc.Col(
     [
         dcc.Markdown("""
@@ -55,11 +72,27 @@ buffer_column = dbc.Col(
 
 
 layout = html.Div([
+    dbc.Row([select_weight_column]),
     dbc.Row([select_red_column, buffer_column, select_blue_column]),
     dbc.Row([
         dbc.Col([], id="results", md=4, className="mx-auto")
     ])
 ])
+
+
+@app.callback(
+    [
+        dash.dependencies.Output("red-corner", "options"),
+        dash.dependencies.Output("blue-corner", "options"),
+    ], [
+        dash.dependencies.Input("weight-class-dropdown", "value"),
+    ]
+)
+def setFightersByWeightClass(weight):
+
+    return [
+        {"label": s, "value": s} for s in fighter_service.getAllFighters(weight_class=weight)
+    ]
 
 
 def getFighterStats(fighter):
@@ -111,6 +144,7 @@ def setBlueNick(fighter):
         dash.dependencies.Input("blue-corner", "value"),
     ]
 )
+
 def makePrediction(r_fighter, b_fighter):
 
     prob, winner, pos_shaps, neg_shaps = fighter_service.doPrediction(r_fighter, b_fighter)
