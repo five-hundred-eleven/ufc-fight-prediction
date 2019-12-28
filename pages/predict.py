@@ -14,6 +14,10 @@ import numpy as np
 from service.fighter_service import fighter_service
 
 
+red_fighter_ = None
+blue_fighter_ = None
+
+
 select_weight_column = dbc.Col(
     [
         dcc.Markdown("""
@@ -81,9 +85,6 @@ layout = html.Div([
 
 
 
-red_fighter_ = None
-blue_fighter_ = None
-
 @app.callback(
     [
         dash.dependencies.Output("red-corner", "options"),
@@ -96,12 +97,15 @@ blue_fighter_ = None
 )
 def setFightersByWeightClass(weight):
 
+
+    global red_fighter_, blue_fighter_
+
     res = fighter_service.getAllFighters(weight_class=weight)
 
     if red_fighter_ not in res:
         red_fighter_ = None
 
-    if blue_fighter not in res:
+    if blue_fighter_ not in res:
         blue_fighter_ = None
 
     return res, res, red_fighter_, blue_fighter_
@@ -141,6 +145,9 @@ def getFighterStats(fighter):
     [dash.dependencies.Input("red-corner", "value")],
 )
 def setRedNick(fighter):
+
+    global red_fighter_
+
     red_fighter_ = fighter
     return getFighterStats(fighter)
 
@@ -150,6 +157,9 @@ def setRedNick(fighter):
     [dash.dependencies.Input("blue-corner", "value")],
 )
 def setBlueNick(fighter):
+
+    global blue_fighter_
+
     blue_fighter_ = fighter
     return getFighterStats(fighter)
 
