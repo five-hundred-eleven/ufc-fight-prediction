@@ -188,19 +188,19 @@ class FighterService:
         """
 
         return (
-            ('Heavyweight', 'Heavyweight',)
-            ('Light Heavyweight (205 lbs.)', 'Light Heavyweight',)
-            ('Middleweight (185 lbs.)', 'Middleweight',)
-            ('Welterweight (170 lbs.)', 'Welterweight',)
-            ('Lightweight (155 lbs.)', 'Lightweight',)
-            ('Featherweight (145 lbs.)', 'Featherweight',)
-            ('Bantamweight (135 lbs.)', 'Bantamweight',)
-            ('Flyweight (125 lbs.)', 'Flyweight',)
-            ("Women's Featherweight (145 lbs.)", "Women's Featherweight",)
-            ("Women's Bantamweight (135 lbs.)", "Women's Bantamweight",)
-            ("Women's Flyweight (125 lbs.)", "Women's Flyweight",)
-            ("Women's Strawweight (115 lbs.)", "Women's Strawweight",)
-            ('Open Weight', None)
+            ('Heavyweight', 'Heavyweight',),
+            ('Light Heavyweight (205 lbs.)', 'Light Heavyweight',),
+            ('Middleweight (185 lbs.)', 'Middleweight',),
+            ('Welterweight (170 lbs.)', 'Welterweight',),
+            ('Lightweight (155 lbs.)', 'Lightweight',),
+            ('Featherweight (145 lbs.)', 'Featherweight',),
+            ('Bantamweight (135 lbs.)', 'Bantamweight',),
+            ('Flyweight (125 lbs.)', 'Flyweight',),
+            ("Women's Featherweight (145 lbs.)", "Women's Featherweight",),
+            ("Women's Bantamweight (135 lbs.)", "Women's Bantamweight",),
+            ("Women's Flyweight (125 lbs.)", "Women's Flyweight",),
+            ("Women's Strawweight (115 lbs.)", "Women's Strawweight",),
+            ('Open Weight', None),
         )
 
 
