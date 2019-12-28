@@ -21,8 +21,8 @@ select_weight_column = dbc.Col(
         """),
         dcc.Dropdown(
             id="weight-class-dropdown",
-            options=[{"label": "Any", "value": None}] + [
-                {"label": s, "value": s} for s in fighter_service.getWeightClasses()
+            options=[
+                {"label": l, "value": v} for l, v in fighter_service.getWeightClasses()
             ],
             value=None,
         ),
