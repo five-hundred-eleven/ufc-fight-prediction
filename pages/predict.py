@@ -39,7 +39,7 @@ select_red_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="red-corner",
-            options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
+            options=[s for s in fighter_service.getAllFighters()]
         ),
         html.Div([], id="red-corner-nick"),
     ],
@@ -56,7 +56,7 @@ select_blue_column = dbc.Col(
         """), 
         dcc.Dropdown(
             id="blue-corner",
-            options=[{"label": s, "value": s} for s in fighter_service.getAllFighters()]
+            options=[s for s in fighter_service.getAllFighters()]
         ),
         html.Div([], id="blue-corner-nick"),
     ],
@@ -90,9 +90,11 @@ layout = html.Div([
 )
 def setFightersByWeightClass(weight):
 
-    return [
+    res = [
         {"label": s, "value": s} for s in fighter_service.getAllFighters(weight_class=weight)
     ]
+
+    return res, res
 
 
 def getFighterStats(fighter):

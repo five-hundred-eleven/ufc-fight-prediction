@@ -109,7 +109,12 @@ class FighterService:
         if fighter not in self.__fighters_to_reach:
             return "-"
 
-        return self.__fighters_to_reach[fighter]
+        res = self.__fighters_to_reach[fighter].strip()
+
+        if res in (None, np.NaN, "nan", "nan cms"):
+            return "-"
+
+        return res
 
 
     def getHeight(self, fighter):
@@ -123,7 +128,12 @@ class FighterService:
         if fighter not in self.__fighters_to_height:
             return "-"
 
-        return self.__fighters_to_height[fighter]
+        res = self.__fighters_to_height[fighter].strip()
+
+        if res in (None, np.NaN, "nan", "nan cms"):
+            return "-"
+
+        return res
 
 
     def getWins(self, fighter):
