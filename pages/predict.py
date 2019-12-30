@@ -86,6 +86,8 @@ layout = html.Div([
     [
         dash.dependencies.Output("red-corner", "options"),
         dash.dependencies.Output("blue-corner", "options"),
+        dash.dependencies.Output("red-corner", "value"),
+        dash.dependencies.Output("blue-corner", "value"),
     ], [
         dash.dependencies.Input("weight-class-dropdown", "value"),
     ]
@@ -95,7 +97,7 @@ def setFightersByWeightClass(weight):
     fighters = list(fighter_service.getAllFighters(weight_class=weight))
     res = [{"value": f, "label": f} for f in fighters]
 
-    return res, res
+    return res, res, None, None
 
 
 def getFighterStats(fighter):
