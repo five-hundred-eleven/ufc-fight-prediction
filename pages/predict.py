@@ -14,9 +14,6 @@ import numpy as np
 from service.fighter_service import fighter_service
 
 
-red_fighter_ = None
-blue_fighter_ = None
-
 
 select_weight_column = dbc.Col(
     [
@@ -97,18 +94,16 @@ layout = html.Div([
 )
 def setFightersByWeightClass(weight):
 
-    global red_fighter_, blue_fighter_
-
     fighters = list(fighter_service.getAllFighters(weight_class=weight))
     res = [{"value": f, "label": f} for f in fighters]
 
-    if red_fighter_ not in fighters:
-        red_fighter_ = None
+    if red_fighter not in fighters:
+        red_fighter = None
 
-    if blue_fighter_ not in fighters:
-        blue_fighter_ = None
+    if blue_fighter not in fighters:
+        blue_fighter = None
 
-    return res, res, red_fighter_, blue_fighter_
+    return res, res, red_fighter, blue_fighter
 
 
 def getFighterStats(fighter):
@@ -146,9 +141,6 @@ def getFighterStats(fighter):
 )
 def setRedNick(fighter):
 
-    global red_fighter_
-
-    red_fighter_ = fighter
     return getFighterStats(fighter)
 
 
@@ -158,9 +150,6 @@ def setRedNick(fighter):
 )
 def setBlueNick(fighter):
 
-    global blue_fighter_
-
-    blue_fighter_ = fighter
     return getFighterStats(fighter)
 
 
