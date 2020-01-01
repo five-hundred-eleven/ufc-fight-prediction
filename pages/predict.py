@@ -94,6 +94,8 @@ layout = html.Div([
 )
 def setFightersByWeightClass(weight):
 
+    print(f"setFightersByWeightClass({weight})")
+
     fighters = list(fighter_service.getAllFighters(weight_class=weight))
     res = [{"value": f, "label": f} for f in fighters]
 
@@ -135,6 +137,8 @@ def getFighterStats(fighter):
 )
 def setRedNick(fighter):
 
+    print(f"setRedNick({fighter})")
+
     return getFighterStats(fighter)
 
 
@@ -143,6 +147,8 @@ def setRedNick(fighter):
     [dash.dependencies.Input("blue-corner", "value")],
 )
 def setBlueNick(fighter):
+
+    print(f"setBlueNick({fighter})")
 
     return getFighterStats(fighter)
 
@@ -157,7 +163,11 @@ def setBlueNick(fighter):
 
 def makePrediction(r_fighter, b_fighter):
 
+    print(f"Doing prediction for {r_fighter}, {b_fighter}")
+
     prob, winner, pos_shaps, neg_shaps = fighter_service.doPrediction(r_fighter, b_fighter)
+
+    print(f"Doing prediction for {r_fighter}, {b_fighter}: winner: {winner}")
 
     loser = b_fighter if r_fighter == winner else r_fighter
 

@@ -80,6 +80,17 @@ class FighterService:
         }
 
 
+        # processing
+        self.__fighters_df["Reach_cms"] = self.__fighters_df["Reach_cms"].replace({
+            np.NaN: self.__fighters_df["Reach_cms"].median(skipna=True)
+        })
+
+        self.__fighters_df["Height_cms"] = self.__fighters_df["Height_cms"].replace({
+            np.NaN: self.__fighters_df["Height_cms"].median(skipna=True)
+        })
+
+
+
     def getNickname(self, fighter):
         """
             Returns the nickname of the fighter, or an empty string if none found.
