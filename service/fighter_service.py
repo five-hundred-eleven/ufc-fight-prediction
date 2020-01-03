@@ -12,6 +12,7 @@ from sklearn.pipeline import make_pipeline
 import shap
 import pickle
 import re
+import tarfile
 
 
 class FighterService:
@@ -31,15 +32,18 @@ class FighterService:
         sherdog_nicks = list(sherdog_df["nick"])
         self.__fighters_to_nicks = {f: n for f, n in zip(sherdog_fighters, sherdog_nicks)}
 
-        with open("pickles/feature_to_name.pickle", "rb") as f:
+
+        t = tarfile.open("pickles/pickles.tar.gz", "r:gz")
+
+        with t.extractfile("pickles/feature_to_name.pickle") as f:
             self.__feature_to_name = pickle.load(f)
 
-        with open("pickles/pipeline.pickle", "rb") as f:
+        with t.extractfile("pickles/pipeline.pickle") as f:
             self.__pipeline = pickle.load(f)
 
-        self.__explainer = shap.TreeExplainer(self.__pipeline.named_steps["xgbclassifier"])
+        self.__explainer = shap.TreeExplainer(self.__pipeline.named_steps["randomforestclassifier"])
 
-        with open("pickles/features.pickle", "rb") as f:
+        with t.extractfile("pickles/features.pickle") as f:
             self.__features = pickle.load(f)
 
         prefix_re = re.compile(r".*(_opponent)|(_ratio)$")
@@ -326,7 +330,7 @@ class FighterService:
         _, si = self.__pipeline.steps[1]
         bout_si = si.transform(bout_ohe)
 
-        proba_values = self.__pipeline["xgbclassifier"].predict_proba(bout_si)
+        proba_values = self.__pipeline["randomforestclassifier"].predict_proba(bout_si)
         probas = pd.DataFrame(data=proba_values, columns=[str(x) for x in self.__pipeline.classes_])
 
         shap_values = self.__explainer.shap_values(bout_si, check_additivity=False)
