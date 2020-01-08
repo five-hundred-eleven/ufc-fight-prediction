@@ -340,6 +340,7 @@ class FighterService:
         print(probas)
 
         shap_values = self.__explainer.shap_values(bout_si, check_additivity=False)
+        print("\tshap_values:", len(shap_values), shap_values)
         shaps = pd.DataFrame(data=shap_values, columns=bout_ohe.columns)
 
         return probas, shaps
