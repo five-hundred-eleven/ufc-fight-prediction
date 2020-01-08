@@ -331,7 +331,13 @@ class FighterService:
         bout_si = si.transform(bout_ohe)
 
         proba_values = self.__pipeline["randomforestclassifier"].predict_proba(bout_si)
+        
         probas = pd.DataFrame(data=proba_values, columns=[str(x) for x in self.__pipeline.classes_])
+
+        print("FighterService__scoreBout():")
+        print("\tprobas.shape:", probas.shape)
+        print("\tprobas:")
+        print(probas)
 
         shap_values = self.__explainer.shap_values(bout_si, check_additivity=False)
         shaps = pd.DataFrame(data=shap_values, columns=bout_ohe.columns)
