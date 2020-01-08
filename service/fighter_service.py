@@ -266,12 +266,12 @@ class FighterService:
         print(red_fighter_prob, "+", blue_fighter_prob, "=", red_fighter_prob+blue_fighter_prob)
 
         if red_fighter_prob > blue_fighter_prob:
-            shap_values = shaps.iloc[0]
+            shap_values = shaps[True].iloc[0]
             winner_prob = red_fighter_prob
             winner = red_fighter
 
         else:
-            shap_values = shaps.iloc[1]
+            shap_values = shaps[True].iloc[1]
             winner_prob = blue_fighter_prob
             winner = blue_fighter
 
@@ -342,7 +342,10 @@ class FighterService:
         shap_values = self.__explainer.shap_values(bout_si, check_additivity=False)
         print("\tshap_values:", len(shap_values), shap_values)
 
-        shaps = pd.DataFrame(data=(shap_values[0] + shap_values[1])/2, columns=bout_ohe.columns)
+        shaps = {
+            self.__pipeline.classes_[0]: pd.DataFrame(data=shap_values[0], columns=bout_ohe.columns),
+            self.__pipeline.classes_[1]: pd.DataFrame(data=shap_values[1], columns=bout_ohe.columns),
+        }
 
         return probas, shaps
 
