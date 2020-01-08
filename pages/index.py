@@ -62,6 +62,8 @@ fig = go.Figure(
 fig.update_layout({
     "title": "Reach and Number of Significant Strikes vs Winner",
 })
+fig.update_xaxes(title_text="Ratio of Fighter's Reach")
+fig.update_yaxes(title_text="Average Number of Significant Strikes  landed by Fighter")
 
 column2 = dbc.Col(
     [
