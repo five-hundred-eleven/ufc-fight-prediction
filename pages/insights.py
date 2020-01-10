@@ -60,11 +60,17 @@ layout = html.Div([
                 Each fight was divided into two rows- one focusing on the red fighter and another focusing on the blue fighter. The target was a column called "is_winner",
                 which is True if the fighter won or False if the fighter lost or if the fight ended in a tie. The baseline accuracy by choosing the majority class ("lose or tie") every time was 50.81%.
 
-                We proceeded to test a Logistic Regression, a Random Forest Classifier, and an XGBClassifier to try to predict the outcome of UFC fights. The accuracy of the Logistic Regression was 64.81%. Interestingly
-                it did not converge, even with the number of iterations jacked up to 333. The accuracy of the Random Forest Classifier was 64.97%, which was very similar to the Logistic Regression. The accuracy
-                of the XGBClassifier with it's parameters optimized with a RandomizedSearchCV was 65.75%, about a percentage point higher than the others.
+                We proceeded to test a Logistic Regression, a Random Forest Classifier, and an XGBClassifier to try to predict the outcome of UFC fights. The accuracy of the Logistic Regression was originally 64.81%. Interestingly
+                it did not converge, even with the number of iterations jacked up to 333. The accuracy of the Random Forest Classifier was originally 64.97%, which was very similar to the Logistic Regression. The accuracy
+                of the XGBClassifier with it's parameters optimized with a RandomizedSearchCV was originally 65.75%, about a percentage point higher than the others.
 
                 The models were further optimized with Permutation Importance. This increased the efficiency of the models by reducing the size of the inputs, but it made no significant difference in accuracy.
+
+                While the XGB Classifier yielded the highest accuracy, its reported confidence was in the high 90s for many predictions. This level of confidence is highly dubious for a UFC fight prediction. We decided to use
+                the Random Forest Classifier for the app, because of its more realistic confidence.
+
+                Oddly, the model often outputs different results depending on which fighter is on the left and which is on the right. This was mitigated by making two predictions for each fight, one in each fighter configuration,
+                and going with whichever prediction has the higher confidence level.
 
                 ### Isolated Partial Dependance Plots
 
