@@ -44,7 +44,7 @@ fighters_df = fighter_service.getFightersDF()
 xs = fighters_df["Reach_cms_ratio"]
 xs = xs[(xs.quantile(0.05) < xs) & (xs < xs.quantile(0.95))]
 
-ys = fighters_df["Heigh_cms_ratio"]
+ys = fighters_df["Height_cms_ratio"]
 ys = ys[(ys.quantile(0.05) < ys) & (ys < ys.quantile(0.95))]
 
 zs = fighters_df["is_winner"].replace({False: -1, True: 1})
@@ -63,7 +63,7 @@ fig.update_layout({
     "title": "Reach and Number of Significant Strikes vs Winner",
 })
 fig.update_xaxes(title_text="Reach Ratio")
-fig.update_yaxes(title_text="Heigh Ratio")
+fig.update_yaxes(title_text="Height Ratio")
 
 column2 = dbc.Col(
     [
